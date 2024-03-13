@@ -27,6 +27,7 @@ from models.mistral_api import tokenize_fn as mistral_api_tokenize_fn
 #   - list: Sampled completion strings from the model.
 completion_fns = {
     'text-davinci-003': partial(gpt_completion_fn, model='text-davinci-003'),
+    'text-davinci-004': partial(gpt_completion_fn, model='text-davinci-004'),
     'gpt-4': partial(gpt_completion_fn, model='gpt-4'),
     'gpt-4-1106-preview':partial(gpt_completion_fn, model='gpt-4-1106-preview'),
     'gpt-3.5-turbo-instruct': partial(gpt_completion_fn, model='gpt-3.5-turbo-instruct'),
