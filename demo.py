@@ -95,8 +95,8 @@ arima_hypers = dict(p=[12,30], d=[1,2], q=[0])
 model_hypers = {
      'LLMTime GPT-3.5': {'model': 'gpt-3.5-turbo-instruct', **gpt3_hypers},
      'LLMTime GPT-4': {'model': 'gpt-4', **gpt4_hypers},
-     'LLMTime GPT-3': {'model': 'text-davinci-003', **gpt3_hypers},
-     'PromptCast GPT-3': {'model': 'text-davinci-003', **promptcast_hypers},
+     'LLMTime GPT-3': {'model': 'text-davinci-004', **gpt3_hypers},
+     'PromptCast GPT-3': {'model': 'text-davinci-004', **promptcast_hypers},
      'LLMA2': {'model': 'llama-7b', **llma2_hypers},
      'mistral': {'model': 'mistral', **llma2_hypers},
      'mistral-api-tiny': {'model': 'mistral-api-tiny', **mistral_api_hypers},

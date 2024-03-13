@@ -28,27 +28,27 @@ llama_hypers = dict(
 )
 
 model_hypers = {
-    'text-davinci-003': {'model': 'text-davinci-003', **gpt3_hypers},
+    'text-davinci-004': {'model': 'text-davinci-004', **gpt3_hypers},
     'llama-7b': {'model': 'llama-7b', **llama_hypers},
     'llama-70b': {'model': 'llama-70b', **llama_hypers},
 }
 
 # Specify the function to get predictions for each model
 model_predict_fns = {
-    'text-davinci-003': get_llmtime_predictions_data,
+    'text-davinci-004': get_llmtime_predictions_data,
     'llama-7b': get_llmtime_predictions_data,
     'llama-70b': get_llmtime_predictions_data,
 }
 
 def is_gpt(model):
-    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-003', 'gpt-4']])
+    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-004', 'gpt-4']])
 
 # Specify the output directory for saving results
 output_dir = 'outputs/monash'
 os.makedirs(output_dir, exist_ok=True)
 
 models_to_run = [
-    'text-davinci-003',
+    'text-davinci-004',
     # 'llama-7b',
     # 'llama-70b',
 ]

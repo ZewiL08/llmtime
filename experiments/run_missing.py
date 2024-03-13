@@ -38,7 +38,7 @@ for dsname,data in datasets.items():
             in_dict = pickle.load(f)
 
         predictions_fns = [get_arima_predictions_data, get_TCN_predictions_data, get_NHITS_predictions_data, get_llmtime_predictions_data]
-        model_names = ['arima','TCN','N-HiTS','text-davinci-003']
+        model_names = ['arima','TCN','N-HiTS','text-davinci-004']
 
         output_dict = defaultdict(list)
         for p in [0.,0.1,0.2,0.3,0.4,0.5,.6,.7,.8,.9]:
@@ -50,7 +50,7 @@ for dsname,data in datasets.items():
                 
                 if 'settings' in best_hyper and isinstance(best_hyper['settings'], dict):
                     best_hyper['settings'] = SerializerSettings(**best_hyper['settings'])
-                if model in ['text-davinci-003']:
+                if model in ['text-davinci-004']:
                     output_dict[model+'-Nan'].append(predict(corrupted_train.copy(),test.copy(), **best_hyper, num_samples=0)['NLL/D'])
                 output_dict[model].append(predict(interpolated.copy(),test.copy(), **best_hyper, num_samples=0)['NLL/D'])
         all_output[dsname] = output_dict

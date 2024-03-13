@@ -46,7 +46,7 @@ model_hypers = {
     'TCN': TCN_hypers,
     'N-BEATS': NBEATS_hypers,
     'N-HiTS': NHITS_hypers,
-    'text-davinci-003': {'model': 'text-davinci-003', **gpt3_hypers},
+    'text-davinci-004': {'model': 'text-davinci-004', **gpt3_hypers},
 }
 
 model_predict_fns = {
@@ -55,11 +55,11 @@ model_predict_fns = {
     'TCN': get_TCN_predictions_data,
     'N-BEATS': get_NBEATS_predictions_data,
     'N-HiTS': get_NHITS_predictions_data,
-    'text-davinci-003': get_llmtime_predictions_data,
+    'text-davinci-004': get_llmtime_predictions_data,
 }
 
 def is_gpt(model):
-    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-003']])
+    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-004']])
 
 
 import pickle
@@ -79,7 +79,7 @@ for dsname,data in datasets.items():
     else:
         out_dict = {}
     
-    for model in ['text-davinci-003', 'gp', 'arima', 'N-HiTS']:
+    for model in ['text-davinci-004', 'gp', 'arima', 'N-HiTS']:
         if model in out_dict and not is_gpt(model):
             if out_dict[model]['samples'] is not None:
                 print(f"Skipping {dsname} {model}")

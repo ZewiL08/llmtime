@@ -193,7 +193,7 @@ for i in range(len(idxs)):
     # nll = get_llmtime_predictions_data(
     #     _train_y.flatten(), #+ np.random.normal(0, 0.01, len(train_y.flatten())), 
     #     y_prediction.flatten(), #+ np.random.normal(0, 0.01, len(y_prediction.flatten())),
-    #     model='text-davinci-003',
+    #     model='text-davinci-004',
     #     alpha=0.99,
     #     basic=True,
     #     settings= SerializerSettings(10, prec=1, signed=True),

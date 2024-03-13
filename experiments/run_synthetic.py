@@ -14,7 +14,7 @@ from models.validation_likelihood_tuning import get_autotuned_predictions_data
 
 # Specify the hyperparameter grid for each model
 gpt3_hypers = dict(
-    model='text-davinci-003',
+    model='text-davinci-004',
     alpha=0.1,
     basic=True,
     settings= SerializerSettings(10, prec=3,signed=True)
@@ -64,7 +64,7 @@ model_hypers = {
     'TCN': TCN_hypers,
     'N-BEATS': NBEATS_hypers,
     'N-HiTS': NHITS_hypers,
-    'text-davinci-003': {'model': 'text-davinci-003', **gpt3_hypers},
+    'text-davinci-004': {'model': 'text-davinci-004', **gpt3_hypers},
     'gpt-4': {'model': 'gpt-4', **gpt4_hypers},
     'llama-70b': {'model': 'llama-70b', **llama_hypers},
 }
@@ -76,13 +76,13 @@ model_predict_fns = {
     'TCN': get_TCN_predictions_data,
     'N-BEATS': get_NBEATS_predictions_data,
     'N-HiTS': get_NHITS_predictions_data,
-    'text-davinci-003': get_llmtime_predictions_data,
+    'text-davinci-004': get_llmtime_predictions_data,
     'gpt-4': get_llmtime_predictions_data,
     'llama-70b': get_llmtime_predictions_data,
 }
 
 def is_gpt(model):
-    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-003', 'gpt-4']])
+    return any([x in model for x in ['ada', 'babbage', 'curie', 'davinci', 'text-davinci-004', 'gpt-4']])
 
 # Specify the output directory for saving results
 output_dir = 'outputs/synthetic'
@@ -99,7 +99,7 @@ for dsname,data in datasets.items():
     else:
         out_dict = {}
     
-    for model in ['text-davinci-003', 'gpt-4', 'arima', 'TCN']:
+    for model in ['text-davinci-004', 'gpt-4', 'arima', 'TCN']:
         if model in out_dict:
             print(f"Skipping {dsname} {model}")
             continue
