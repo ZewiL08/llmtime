@@ -62,6 +62,7 @@ completion_fns = {
 #   - float: Computed NLL per dimension for p(target_arr | input_arr).
 nll_fns = {
     'text-davinci-003': partial(gpt_nll_fn, model='text-davinci-003'),
+    'text-davinci-004': partial(gpt_nll_fn, model='text-davinci-004'),
     'mistral': partial(mistral_nll_fn, model='mistral'),
     'mistral-api-tiny': partial(mistral_api_nll_fn, model='mistral-tiny'),
     'mistral-api-small': partial(mistral_api_nll_fn, model='mistral-small'),
@@ -84,6 +85,7 @@ nll_fns = {
 #   - token_ids (list): A list of token ids.
 tokenization_fns = {
     'text-davinci-003': partial(gpt_tokenize_fn, model='text-davinci-003'),
+    'text-davinci-004': partial(gpt_tokenize_fn, model='text-davinci-004'),
     'gpt-3.5-turbo-instruct': partial(gpt_tokenize_fn, model='gpt-3.5-turbo-instruct'),
     'mistral': partial(mistral_tokenize_fn, model='mistral'),
     'mistral-api-tiny': partial(mistral_api_tokenize_fn, model='mistral-tiny'),
@@ -100,6 +102,7 @@ tokenization_fns = {
 # Optional: Context lengths for each model, only needed if you want automatic input truncation.
 context_lengths = {
     'text-davinci-003': 4097,
+    'text-davinci-004': 4097,
     'gpt-3.5-turbo-instruct': 4097,
     'mistral-api-tiny': 4097,
     'mistral-api-small': 4097,
