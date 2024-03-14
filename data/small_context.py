@@ -112,3 +112,27 @@ def get_memorization_datasets(n=-1,testfrac=0.15, predict_steps=30):
         if i+1==n:
             break
     return dict(zip(datasets,datas))
+
+
+def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30):
+    datasets = [
+        'BTC_Daily_ohlc'
+    ]
+    datas = []
+    for i,dsname in enumerate(datasets):
+        with open(f"datasets/bitcoin/{dsname}.csv") as f:
+            df = pd.read_csv(f, usecols=[0, 4], parse_dates=[0])
+            df['close'] = df['close'].astype(float)
+            series = pd.Series(df['close'].values, index=df['date'])
+
+        if predict_steps is not None:
+            splitpoint = len(series)-predict_steps
+        else:    
+            splitpoint = int(len(series)*(1-testfrac))
+            
+        train = series.iloc[:splitpoint]
+        test = series.iloc[splitpoint:]
+        datas.append((train,test))
+        if i+1==n:
+            break
+    return dict(zip(datasets,datas))
