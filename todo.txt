@@ -1,0 +1,3 @@
+forecast windows 3-5-7 days
+draw candles
+
