@@ -114,7 +114,7 @@ def get_memorization_datasets(n=-1,testfrac=0.15, predict_steps=30):
     return dict(zip(datasets,datas))
 
 
-def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30):
+def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30, start_date = "2023-09-01"):
     datasets = [
         'BTC_Daily_ohlc'
     ]
@@ -122,8 +122,7 @@ def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30):
     for i,dsname in enumerate(datasets):
         with open(f"datasets/bitcoin/{dsname}.csv") as f:
             df = pd.read_csv(f, usecols=[0, 4], parse_dates=[0])
-            start_date = "2023-09-01"
-            mask = (df["date"] > start_date) 
+            mask = (df["date"] > start_date)
             df = df.loc[mask]
             df['close'] = df['close'].astype(float)
             series = pd.Series(df['close'].values, index=df['date'])
