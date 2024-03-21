@@ -114,9 +114,10 @@ def get_memorization_datasets(n=-1,testfrac=0.15, predict_steps=30):
     return dict(zip(datasets,datas))
 
 
-def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30, start_date = "2023-09-01"):
+def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30, start_date = "2023-01-01"):
     datasets = [
-        'BTC_Daily_ohlc'
+        'BTC_Daily_ohlc',
+        'BTC_BitHourly'
     ]
     datas = []
     for i,dsname in enumerate(datasets):
@@ -127,6 +128,30 @@ def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30, start_date = "202
             df['close'] = df['close'].astype(float)
             series = pd.Series(df['close'].values, index=df['date'])
 
+        if predict_steps is not None:
+            splitpoint = len(series)-predict_steps
+        else:    
+            splitpoint = int(len(series)*(1-testfrac))
+            
+        train = series.iloc[:splitpoint]
+        test = series.iloc[splitpoint:]
+        datas.append((train,test))
+        if i+1==n:
+            break
+    return dict(zip(datasets,datas))
+
+def get_bitcoin_datasets_hourly(n=-1,testfrac=0.15, predict_steps=30, timestamp = "2023-01-01"):
+    datasets = [
+        'BTC_BitHourly'
+    ]
+    datas = []
+    for i,dsname in enumerate(datasets):
+        with open(f"datasets/bitcoin/{dsname}.csv") as f:
+            df = pd.read_csv(f, usecols=[0, 5], parse_dates=[0])
+            mask = (df["timestamp"] > timestamp)
+            df = df.loc[mask]
+            df['close'] = df['close'].astype(float)
+            series = pd.Series(df['close'].values, index=df['timestamp'])
         if predict_steps is not None:
             splitpoint = len(series)-predict_steps
         else:    
