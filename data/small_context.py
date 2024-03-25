@@ -153,6 +153,7 @@ def get_bitcoin_datasets_hourly(n=-1,testfrac=0.15, predict_steps=30, timestamp 
             df['close'] = df['close'].astype(float)
             series = pd.Series(df['close'].values, index=df['timestamp'])
 
+            f.seek(0)
             df_raw = pd.read_csv(f, parse_dates=[0])
             df_raw = df_raw.loc[mask]
 
