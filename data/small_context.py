@@ -152,6 +152,10 @@ def get_bitcoin_datasets_hourly(n=-1,testfrac=0.15, predict_steps=30, timestamp 
             df = df.loc[mask]
             df['close'] = df['close'].astype(float)
             series = pd.Series(df['close'].values, index=df['timestamp'])
+
+            df_raw = pd.read_csv(f, parse_dates=[0])
+            df_raw = df_raw.loc[mask]
+
         if predict_steps is not None:
             splitpoint = len(series)-predict_steps
         else:    
@@ -159,7 +163,8 @@ def get_bitcoin_datasets_hourly(n=-1,testfrac=0.15, predict_steps=30, timestamp 
             
         train = series.iloc[:splitpoint]
         test = series.iloc[splitpoint:]
-        datas.append((train,test))
+
+        datas.append((train,test,df_raw))
         if i+1==n:
             break
     return dict(zip(datasets,datas))
