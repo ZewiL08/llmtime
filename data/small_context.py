@@ -1,6 +1,9 @@
 import darts.datasets
 import pandas as pd
 
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+
 dataset_names = [
     'AirPassengersDataset', 
     'AusBeerDataset', 
@@ -114,31 +117,40 @@ def get_memorization_datasets(n=-1,testfrac=0.15, predict_steps=30):
     return dict(zip(datasets,datas))
 
 
-def get_bitcoin_datasets(n=-1,testfrac=0.15, predict_steps=30, start_date = "2023-01-01"):
+def get_bitcoin_datasets(input_length, predict_length, end_date = "2023-01-01"):
     datasets = [
         'BTC_Daily_ohlc',
-        'BTC_BitHourly'
     ]
+
+    ending_predict_date_num = datetime.strptime(end_date, '%Y-%m-%d')
+    new_date = ending_predict_date_num - timedelta(days=input_length) - timedelta(days=predict_length)
+    start_date = new_date.strftime('%Y-%m-%d')
+
     datas = []
     for i,dsname in enumerate(datasets):
         with open(f"datasets/bitcoin/{dsname}.csv") as f:
             df = pd.read_csv(f, usecols=[0, 4], parse_dates=[0])
-            mask = (df["date"] > start_date)
+            mask = (df["date"] >= start_date) & (df["date"] <= end_date)            
             df = df.loc[mask]
             df['close'] = df['close'].astype(float)
             series = pd.Series(df['close'].values, index=df['date'])
 
-        if predict_steps is not None:
-            splitpoint = len(series)-predict_steps
-        else:    
-            splitpoint = int(len(series)*(1-testfrac))
-            
+            f.seek(0)
+            df_raw = pd.read_csv(f, parse_dates=[0])
+            df_raw = df_raw.loc[mask]
+
+        splitpoint = input_length
         train = series.iloc[:splitpoint]
         test = series.iloc[splitpoint:]
         datas.append((train,test))
-        if i+1==n:
-            break
-    return dict(zip(datasets,datas))
+
+
+    print("Data set : BTC_Daily_ohlc")
+    print(f"from {start_date} to 2023-01-01")
+    print(f"training on {input_length} and forecasting on {predict_length} points")
+    print("Imput is scaled closing price")
+
+    return train,test,df_raw
 
 def get_bitcoin_datasets_hourly(n=-1,testfrac=0.15, predict_steps=30, timestamp = "2023-01-01"):
     datasets = [
